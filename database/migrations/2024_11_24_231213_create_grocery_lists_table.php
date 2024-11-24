@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('grocery_lists', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('item_name');
+            $table->string('category')->nullable();
+            $table->decimal('estimated_price', 10, 2)->nullable();
+            $table->boolean('purchased')->default(false);
             $table->timestamps();
         });
     }
