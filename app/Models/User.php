@@ -45,4 +45,26 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // MEANS: User can have many expenses - Laravel needs to know how to find user`s expenses
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class);
+    }
+
+    // USER can have many incomes
+    public function incomes()
+    {
+        return $this->hasMany(Income::class);
+    }
+
+    public function budgets()
+    {
+        return $this->hasMany(Budget::class);
+    }
+
+    public function groceryList()
+    {
+        return $this->hasMany(GroceryList::class);
+    }
 }
