@@ -31,5 +31,7 @@ class IncomeController extends Controller
         // income() is necessary to define the relationship - user_id in the incomes table t o the authenticated user
         $user = Auth::user();
         $user->incomes()->create($validated);
+
+        return redirect('incomes.index')->with('success', 'Income has been created');
     }
 }
