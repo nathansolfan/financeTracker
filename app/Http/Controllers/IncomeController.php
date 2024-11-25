@@ -10,14 +10,14 @@ class IncomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $income = $user->incomes()->latest()->paginate(10);
+        $incomes = $user->incomes()->latest()->paginate(10);
 
         return view('incomes.index', compact('incomes'));
     }
 
     public function create()
     {
-        return view('incomes.create', compact('incomes'));
+        return view('incomes.create');
     }
 
     public function store(Request $request)
