@@ -34,9 +34,9 @@ Route::middleware('auth')->group(function ()  {
     Route::post('/incomes', [IncomeController::class, 'store'])->name('incomes.store');
 
     // Budget Route
-    Route::get('/budget', [BudgetController::class, 'index'])->name('budget.index');
-    Route::get('/budget/create', [BudgetController::class, 'create'])->name('budget.create');
-    Route::post('/budget', [BudgetController::class, 'store'])->name('budget.store');
+    Route::get('/budgets', [BudgetController::class, 'index'])->name('budgets.index');
+    Route::get('/budgets/create', [BudgetController::class, 'create'])->name('budgets.create');
+    Route::post('/budgets', [BudgetController::class, 'store'])->name('budgets.store');
 
     // Grocery Route
     Route::get('/grocery', [GroceryListController::class, 'index'])->name('grocery.index');
