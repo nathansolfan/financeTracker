@@ -28,7 +28,6 @@ class IncomeController extends Controller
             'date' => 'required|date',
         ]);
 
-        // income() is necessary to define the relationship - user_id in the incomes table t o the authenticated user
         $user = Auth::user();
         $user->incomes()->create($validated);
 
