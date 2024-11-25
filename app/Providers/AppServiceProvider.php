@@ -4,6 +4,11 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * @method static \App\Models\User|null user()
+ */
+
+
 class AppServiceProvider extends ServiceProvider
 {
     /**

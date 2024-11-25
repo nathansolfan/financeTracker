@@ -22,8 +22,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::middleware('auth', function () {
-
+Route::middleware('auth')->group(function ()  {
     // Expense Routes
     Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
     Route::get('/expenses/create', [ExpenseController::class, 'create'])->name('expenses.create');

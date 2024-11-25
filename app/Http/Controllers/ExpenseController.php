@@ -30,7 +30,6 @@ class ExpenseController extends Controller
             'description' => 'nullable|string|max:255',
             'date' => 'required|date',
         ]);
-        /** @var User $user */
         $user = Auth::user();
         $user->expenses()->create($validated);
 
