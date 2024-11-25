@@ -31,6 +31,6 @@ class BudgetController extends Controller
         $user = Auth::user();
         $user->budgets()->create($validated);
 
-        return redirect('budgets.index')->with('success', 'Budget has been added');
+        return redirect()->route('budgets.index')->with('success', 'Budget has been added');
     }
 }

@@ -32,6 +32,6 @@ class IncomeController extends Controller
         $user = Auth::user();
         $user->incomes()->create($validated);
 
-        return redirect('incomes.index')->with('success', 'Income has been created');
+        return redirect()->route('incomes.index')->with('success', 'Income has been created');
     }
 }

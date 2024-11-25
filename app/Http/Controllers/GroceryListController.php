@@ -34,7 +34,7 @@ class GroceryListController extends Controller
         $user = Auth::user();
         $user->groceryLists()->create($validated);
 
-        return view('grocery.index')->with('success', 'Grocery item added okay');
+        return redirect()->route('grocery.index')->with('success', 'Grocery item added okay');
 
     }
 }
