@@ -11,12 +11,27 @@ class ExpenseController extends Controller
 
 
 
-    public function index()
+    public function index(Request $request)
     {
         // retrieve all expenses
         /** @var User $user */
         $user = Auth::user();
-        $expenses = $user->expenses()->latest()->paginate(10);
+        $query = $user->expenses();
+
+        // Apply the search
+        if ($request->filled('search')) {
+
+            $search = $request->search;
+            $query->where(function ($query) use ($search) {
+                $query->where('description', 'like', '%' . $search . '%')
+                      ->orWhere('category', 'like', '%' . $search . '%')
+                      ->orWhere('amount', 'like', '%' . $search . '%');
+            });
+        }
+
+        // $expenses = $user->expenses()->latest()->paginate(10);
+        $expenses = $query->latest()->paginate(10);
+
         return view('expenses.index', compact('expenses'));
     }
 
