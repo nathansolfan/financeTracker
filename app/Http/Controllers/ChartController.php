@@ -2,26 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\ChartService;
 use Illuminate\Support\Facades\Auth;
 
 class ChartController extends Controller
 {
-    protected $chartService;
-
-    public function __construct(ChartService $chartService)
-    {
-        $this->chartService = $chartService;
-    }
-
     public function expenseChart()
     {
         $user = Auth::user();
-        $chart = $this->chartService->createExpenseChart($user);
 
-        return response()->json([
-            'labels' => $chart->labels,
-            'datasets' => $chart->datasets,
-        ]);
+        // Fetch grouped expenses
+        $expenses = $user->expenses()
+            ->selectRaw('category, SUM(amount) as total')
+            ->groupBy('category')
+            ->pluck('total', 'category');
+
+        // Prepare data for Chart.js
+        $chartData = [
+            'labels' => $expenses->keys()->toArray(), // Categories
+            'datasets' => [
+                [
+                    'label' => 'Expenses by Category',
+                    'data' => $expenses->values()->toArray(), // Expense totals
+                    'backgroundColor' => ['#FF5733', '#33FF57', '#3357FF', '#FFC300', '#C70039'], // Colors for each category
+                ],
+            ],
+        ];
+
+        return response()->json($chartData);
     }
 }

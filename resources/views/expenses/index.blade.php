@@ -3,7 +3,6 @@
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Your Expenses') }}
         </h2>
-
     </x-slot>
 
     <div class="py-12">
@@ -25,6 +24,12 @@
                         </a>
                     </div>
 
+                    <!-- Chart -->
+                    <div class="mb-6">
+                        <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200 mb-4">{{ __('Expenses Chart') }}</h3>
+                        <canvas id="expensesChart" class="w-full h-64"></canvas>
+                    </div>
+
                     <!-- Expenses Table -->
                     <table class="min-w-full border-collapse border border-gray-200 dark:border-gray-700">
                         <thead>
@@ -39,8 +44,7 @@
                         <tbody>
                             @forelse ($expenses as $index => $expense)
                                 <tr class="border-t border-gray-300 dark:border-gray-600">
-                                    {{-- <td class="px-4 py-2">{{ $expense->id }}</td> --}}
-                                    <td class="px-4 py-2">{{ $index + 1 }}</td> <!-- Sequential numbering -->
+                                    <td class="px-4 py-2">{{ $index + 1 }}</td>
                                     <td class="px-4 py-2">{{ $expense->amount }}</td>
                                     <td class="px-4 py-2">{{ $expense->category }}</td>
                                     <td class="px-4 py-2">{{ $expense->description }}</td>
@@ -62,4 +66,37 @@
             </div>
         </div>
     </div>
+
+    <!-- Chart.js Script -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('{{ route('chart.expense') }}')
+                .then(response => response.json())
+                .then(data => {
+                    const ctx = document.getElementById('expensesChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.labels,
+                            datasets: data.datasets
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'top'
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Expenses by Category'
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching chart data:', error));
+        });
+    </script>
 </x-app-layout>
