@@ -3,6 +3,7 @@
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Your Expenses') }}
         </h2>
+
     </x-slot>
 
     <div class="py-12">
@@ -15,6 +16,14 @@
                             {{ session('success') }}
                         </div>
                     @endif
+
+                    <!-- Add Expense Button -->
+                    <div class="flex justify-end mb-4">
+                        <a href="{{ route('expenses.create') }}"
+                           class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-600 focus:bg-blue-600 focus:ring focus:ring-blue-300 focus:outline-none active:bg-blue-700 disabled:opacity-25 transition">
+                            {{ __('Add Expense') }}
+                        </a>
+                    </div>
 
                     <!-- Expenses Table -->
                     <table class="min-w-full border-collapse border border-gray-200 dark:border-gray-700">
