@@ -71,32 +71,49 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            fetch('{{ route('chart.expense') }}')
-                .then(response => response.json())
-                .then(data => {
-                    const ctx = document.getElementById('expensesChart').getContext('2d');
-                    new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: data.labels,
-                            datasets: data.datasets
+    fetch('{{ route('chart.expense') }}')
+        .then(response => response.json())
+        .then(data => {
+            const ctx = document.getElementById('expensesChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.labels, // X-axis labels (categories)
+                    datasets: [
+                        {
+                            label: 'Expenses by Category', // Single dataset label
+                            data: data.datasets[0].data, // Data for each category
+                            backgroundColor: data.datasets[0].backgroundColor, // Colors for each category
                         },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    display: true,
-                                    position: 'top'
-                                },
-                                title: {
-                                    display: true,
-                                    text: 'Expenses by Category'
-                                }
-                            }
-                        }
-                    });
-                })
-                .catch(error => console.error('Error fetching chart data:', error));
-        });
+                    ],
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false, // Hide the legend if there's only one dataset
+                        },
+                        title: {
+                            display: true,
+                            text: 'Expenses by Category',
+                        },
+                    },
+                    scales: {
+                        x: {
+                            stacked: false, // Disable stacking
+                        },
+                        y: {
+                            stacked: false, // Disable stacking
+                            beginAtZero: true,
+                        },
+                    },
+                },
+            });
+        })
+        .catch(error => console.error('Error fetching chart data:', error));
+});
+
+
+
     </script>
 </x-app-layout>
