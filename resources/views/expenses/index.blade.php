@@ -37,9 +37,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($expenses as $expense)
+                            @forelse ($expenses as $index => $expense)
                                 <tr class="border-t border-gray-300 dark:border-gray-600">
-                                    <td class="px-4 py-2">{{ $expense->id }}</td>
+                                    {{-- <td class="px-4 py-2">{{ $expense->id }}</td> --}}
+                                    <td class="px-4 py-2">{{ $index + 1 }}</td> <!-- Sequential numbering -->
                                     <td class="px-4 py-2">{{ $expense->amount }}</td>
                                     <td class="px-4 py-2">{{ $expense->category }}</td>
                                     <td class="px-4 py-2">{{ $expense->description }}</td>

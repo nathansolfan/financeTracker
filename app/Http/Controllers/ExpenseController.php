@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ChartService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ExpenseController extends Controller
 {
+    protected $chartService;
+
+    public function __construct(ChartService $chartService)
+    {
+        $this->chartService = $chartService;
+    }
+
+
     public function index()
     {
         // retrieve all expenses

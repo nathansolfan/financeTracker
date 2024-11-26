@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BudgetController;
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\GroceryListController;
 use App\Http\Controllers\IncomeController;
@@ -20,7 +21,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
 
 Route::middleware('auth')->group(function ()  {
     // Expense Routes
@@ -43,5 +43,8 @@ Route::middleware('auth')->group(function ()  {
     Route::get('/grocery/create', [GroceryListController::class, 'create'])->name('grocery.create');
     Route::post('/grocery', [GroceryListController::class, 'store'])->name('grocery.store');
 });
+
+// CHART
+Route::get('/chart/expenses', [ChartController::class, 'expenseChart'])->name('chart.expense');
 
 require __DIR__.'/auth.php';
