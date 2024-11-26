@@ -24,11 +24,31 @@
                         </a>
                     </div>
 
+
+
                     <!-- Chart -->
                     <div class="mb-6">
                         <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200 mb-4">{{ __('Expenses Chart') }}</h3>
                         <canvas id="expensesChart" class="w-full h-64"></canvas>
                     </div>
+
+                    <!-- Search Bar -->
+                    <form method="GET" action="{{ route('expenses.index') }}" class="mb-6">
+                        <div class="flex items-center gap-4">
+                            <!-- Search Input -->
+                            <div class="flex-1">
+                                <label for="search" class="block text-sm font-medium">{{ __('Search Expenses') }}</label>
+                                <input type="text" name="search" id="search" value="{{ request('search') }}"
+                                placeholder="Search by description, category, or amount"
+                                class="w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <!-- Submit Button -->
+                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-600 focus:bg-blue-600 focus:ring focus:ring-blue-300 focus:outline-none active:bg-blue-700 disabled:opacity-25 transition">
+                                {{ __('Search') }}
+                            </button>
+                        </div>
+                    </form>
+
 
                     <!-- Expenses Table -->
                     <table class="min-w-full border-collapse border border-gray-200 dark:border-gray-700">
