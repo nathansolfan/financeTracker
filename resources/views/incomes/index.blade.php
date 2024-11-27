@@ -32,7 +32,7 @@
                             <div class="flex-1">
                                 <label for="search" class="block text-sm font-medium">{{ __('Search Expenses') }}</label>
                                 <input type="text" name="search" id="search" value="{{ request('search') }}"
-                                placeholder="Search by description, category, or amount"
+                                placeholder="Search by Amount, Source or Date"
                                 class="w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                             </div>
 
