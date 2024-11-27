@@ -25,7 +25,6 @@
                     </div>
 
 
-
                     <!-- Chart -->
                     <div class="mb-6">
                         <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200 mb-4">{{ __('Expenses Chart') }}</h3>
