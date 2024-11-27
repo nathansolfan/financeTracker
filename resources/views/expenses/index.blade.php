@@ -34,7 +34,8 @@
 
                     <!-- Search Bar -->
                     <form method="GET" action="{{ route('expenses.index') }}" class="mb-6">
-                        <div class="flex items-center gap-4">
+                        <div class="flex flex-wrap items-end gap-4">
+
                             <!-- Search Input -->
                             <div class="flex-1">
                                 <label for="search" class="block text-sm font-medium">{{ __('Search Expenses') }}</label>
@@ -42,8 +43,15 @@
                                 placeholder="Search by description, category, or amount"
                                 class="w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                             </div>
+
+                            <!-- Clear Search Button -->
+                            <a href="{{ route('expenses.index') }}"
+                            class="inline-flex items-center px-2 py-2 bg-gray-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-600 focus:bg-gray-600 focus:ring focus:ring-gray-300 focus:outline-none active:bg-gray-700 disabled:opacity-25 transition">
+                            {{ __('Clear Search') }}
+                            </a>
+
                             <!-- Submit Button -->
-                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-600 focus:bg-blue-600 focus:ring focus:ring-blue-300 focus:outline-none active:bg-blue-700 disabled:opacity-25 transition">
+                            <button type="submit" class="inline-flex items-center px-2 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-600 focus:bg-blue-600 focus:ring focus:ring-blue-300 focus:outline-none active:bg-blue-700 disabled:opacity-25 transition">
                                 {{ __('Search') }}
                             </button>
                         </div>
