@@ -29,7 +29,7 @@ class ExpenseController extends Controller
             });
         }
 
-        // $expenses = $user->expenses()->latest()->paginate(10);
+    // $expenses = $user->expenses()->latest()->paginate(10);
         $expenses = $query->latest()->paginate(10);
 
         return view('expenses.index', compact('expenses'));

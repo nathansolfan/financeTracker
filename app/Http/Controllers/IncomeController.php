@@ -7,10 +7,22 @@ use Illuminate\Support\Facades\Auth;
 
 class IncomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
-        $incomes = $user->incomes()->latest()->paginate(10);
+        $query = $user->incomes();
+
+        // Search
+        if ($request->filled('search')) {
+
+            $search = $request->search;
+            $query->where(function ($query) use ($search) {
+                $query->where('amount', 'like', '%' . $search . '%')
+                ->orWhere('source', 'like', '%' . $search . '%');
+            });
+        }
+    // $incomes = $user->incomes()->latest()->paginate(10);
+        $incomes = $query->latest()->paginate(10);
 
         return view('incomes.index', compact('incomes'));
     }
