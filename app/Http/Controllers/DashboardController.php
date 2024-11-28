@@ -11,26 +11,32 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        //Calculate Totals
+        // Calculate Totals
         $totalIncome = $user->incomes()->sum('amount');
         $totalExpenses = $user->expenses()->sum('amount');
         $remainingBalance = $totalIncome - $totalExpenses;
 
-        //Budget Utilization
-        $budgets = $user->budgets()->get();
-        foreach ($budgets as $budget) {
-            $budget->total_expenses = $user->expenses()
+        // Budget Utilization
+        $budgetUtilization = $user->budgets()->get()->map(function ($budget) use ($user) {
+            $totalExpenses = $user->expenses()
             ->where('category', $budget->category)
             ->whereMonth('date', date('m', strtotime($budget->month)))
-            ->sum('amount'); // Expenses in the budget category
-            $budget->remaining_budget = $budget->amount - $budget->total_expenses; // Remaining budget
-        }
+            ->sum('amount');
 
+            return (object) [
+                'category' => $budget->category,
+                'total_buget' => $budget->amount,
+                'used' => $totalExpenses,
+                'remaining' => $budget->amount - $totalExpenses,
+            ];
+        });
+
+        // Pass all variables to the view
         return view('dashboard.index', compact(
-        'totalIncome',
-        'totalExpenses',
-        'remainingBalance',
-        'budgets'
-    ));
+            'totalIncome',
+            'totalExpenses',
+            'remainingBalance',
+            'budgetUtilization'
+        ));
     }
 }
