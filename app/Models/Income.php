@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Income extends Model
 {
+    protected $fillable = [
+        'user_id',
+        'source',
+        'amount',
+        'date',
+    ];
+
     // INCOME belongsTo the MODEL USER::
     public function user()
     {

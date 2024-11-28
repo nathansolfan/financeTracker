@@ -48,8 +48,6 @@
                         </div>
                     </form>
 
-
-
                     <!-- Budgets Table -->
                     <table class="min-w-full border-collapse border border-gray-200 dark:border-gray-700">
                         <thead>
