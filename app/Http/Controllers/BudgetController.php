@@ -25,6 +25,15 @@ class BudgetController extends Controller
         // $budgets = $user->budgets()->latest()->paginate(10);
         $budgets = $query->latest()->paginate(10);
 
+        // Calculate budget utilizationj for each budget category
+        foreach ($budgets as $budget) {
+            $budget->total_expenses = $user->expenses()
+            ->where('category', $budget->category)
+            ->whereMonth('date', date('m', strtotime($budget->month)))
+            ->sum('amount'); //Total expenses for the category in the budgets month
+            $budget->remaining_budget = $budget->amount - $budget->total_expenses;  // Remaining budget
+        }
+
         return view('budgets.index', compact('budgets'));
     }
 
