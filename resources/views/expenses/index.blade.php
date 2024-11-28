@@ -17,36 +17,36 @@
                     @endif
 
                     <!-- Add Expense Button -->
-                    <div class="flex justify-end mb-4">
+                    <div class="flex justify-end mb-6">
                         <a href="{{ route('expenses.create') }}"
                            class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-600 focus:bg-blue-600 focus:ring focus:ring-blue-300 focus:outline-none active:bg-blue-700 disabled:opacity-25 transition">
-                            {{ __('Add Expense') }}
+                            <i class="fas fa-plus mr-2"></i> {{ __('Add Expense') }}
                         </a>
                     </div>
 
-
-                    <!-- Chart -->
+                    <!-- Chart Section -->
                     <div class="mb-6">
                         <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200 mb-4">{{ __('Expenses Chart') }}</h3>
-                        <canvas id="expensesChart" class="w-full h-64"></canvas>
+                        <div class="bg-gray-100 dark:bg-gray-900 p-4 rounded-md shadow">
+                            <canvas id="expensesChart" class="w-full h-64"></canvas>
+                        </div>
                     </div>
 
                     <!-- Search Bar -->
                     <form method="GET" action="{{ route('expenses.index') }}" class="mb-6">
                         <div class="flex flex-wrap items-end gap-4">
-
                             <!-- Search Input -->
                             <div class="flex-1">
-                                <label for="search" class="block text-sm font-medium">{{ __('Search Expenses') }}</label>
+                                <label for="search" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Search Expenses') }}</label>
                                 <input type="text" name="search" id="search" value="{{ request('search') }}"
-                                placeholder="Search by description, category, or amount"
-                                class="w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                       placeholder="Search by description, category, or amount"
+                                       class="w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                             </div>
 
                             <!-- Clear Search Button -->
                             <a href="{{ route('expenses.index') }}"
-                            class="inline-flex items-center px-2 py-2 bg-gray-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-600 focus:bg-gray-600 focus:ring focus:ring-gray-300 focus:outline-none active:bg-gray-700 disabled:opacity-25 transition">
-                            {{ __('Clear Search') }}
+                               class="inline-flex items-center px-2 py-2 bg-gray-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-600 focus:bg-gray-600 focus:ring focus:ring-gray-300 focus:outline-none active:bg-gray-700 disabled:opacity-25 transition">
+                                {{ __('Clear Search') }}
                             </a>
 
                             <!-- Submit Button -->
@@ -56,26 +56,26 @@
                         </div>
                     </form>
 
-
                     <!-- Expenses Table -->
-                    <table class="min-w-full border-collapse border border-gray-200 dark:border-gray-700">
+                    <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200 mb-4">{{ __('Expense Details') }}</h3>
+                    <table class="min-w-full border-collapse border border-gray-200 dark:border-gray-700 rounded-lg shadow-md">
                         <thead>
-                            <tr class="bg-gray-200 dark:bg-gray-700">
-                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ __('#') }}</th>
-                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ __('Amount') }}</th>
-                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ __('Category') }}</th>
-                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ __('Description') }}</th>
-                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ __('Date') }}</th>
+                            <tr class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+                                <th class="px-4 py-2 border">{{ __('#') }}</th>
+                                <th class="px-4 py-2 border">{{ __('Amount') }}</th>
+                                <th class="px-4 py-2 border">{{ __('Category') }}</th>
+                                <th class="px-4 py-2 border">{{ __('Description') }}</th>
+                                <th class="px-4 py-2 border">{{ __('Date') }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($expenses as $index => $expense)
-                                <tr class="border-t border-gray-300 dark:border-gray-600">
-                                    <td class="px-4 py-2">{{ $index + 1 }}</td>
-                                    <td class="px-4 py-2">{{ $expense->amount }}</td>
-                                    <td class="px-4 py-2">{{ $expense->category }}</td>
-                                    <td class="px-4 py-2">{{ $expense->description }}</td>
-                                    <td class="px-4 py-2">{{ $expense->date }}</td>
+                                <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <td class="px-4 py-2 border">{{ $index + 1 }}</td>
+                                    <td class="px-4 py-2 border">${{ number_format($expense->amount, 2) }}</td>
+                                    <td class="px-4 py-2 border">{{ $expense->category }}</td>
+                                    <td class="px-4 py-2 border">{{ $expense->description }}</td>
+                                    <td class="px-4 py-2 border">{{ $expense->date }}</td>
                                 </tr>
                             @empty
                                 <tr>
@@ -98,49 +98,63 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-    fetch('{{ route('chart.expense') }}')
-        .then(response => response.json())
-        .then(data => {
-            const ctx = document.getElementById('expensesChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: data.labels, // X-axis labels (categories)
-                    datasets: [
-                        {
-                            label: 'Expenses by Category', // Single dataset label
-                            data: data.datasets[0].data, // Data for each category
-                            backgroundColor: data.datasets[0].backgroundColor, // Colors for each category
+            fetch('{{ route('chart.expense') }}')
+                .then(response => response.json())
+                .then(data => {
+                    const ctx = document.getElementById('expensesChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.labels,
+                            datasets: [
+                                {
+                                    label: 'Expenses by Category',
+                                    data: data.datasets[0].data,
+                                    backgroundColor: [
+                                        '#FF6384',
+                                        '#36A2EB',
+                                        '#FFCE56',
+                                        '#4BC0C0',
+                                        '#9966FF',
+                                        '#FF9F40',
+                                    ],
+                                    borderColor: '#ffffff',
+                                    borderWidth: 1,
+                                },
+                            ],
                         },
-                    ],
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: false, // Hide the legend if there's only one dataset
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'top',
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function (tooltipItem) {
+                                            return `$${tooltipItem.raw}`;
+                                        },
+                                    },
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Expenses by Category',
+                                    font: { size: 16 },
+                                },
+                            },
+                            scales: {
+                                x: {
+                                    beginAtZero: true,
+                                },
+                                y: {
+                                    beginAtZero: true,
+                                },
+                            },
                         },
-                        title: {
-                            display: true,
-                            text: 'Expenses by Category',
-                        },
-                    },
-                    scales: {
-                        x: {
-                            stacked: false, // Disable stacking
-                        },
-                        y: {
-                            stacked: false, // Disable stacking
-                            beginAtZero: true,
-                        },
-                    },
-                },
-            });
-        })
-        .catch(error => console.error('Error fetching chart data:', error));
-});
-
-
-
+                    });
+                })
+                .catch(error => console.error('Error fetching chart data:', error));
+        });
     </script>
 </x-app-layout>
