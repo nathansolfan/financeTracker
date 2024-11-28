@@ -7,10 +7,23 @@ use Illuminate\Support\Facades\Auth;
 
 class BudgetController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
-        $budgets = $user->budgets()->latest()->paginate(10);
+        $query = $user->budgets();
+
+        // Apply the search
+        if ($request->filled('search')) {
+
+            $search = $request->search;
+            $query->where(function ($query) use ($search) {
+                $query->where('description', 'like', '%' . $search . '%')
+                      ->orWhere('category', 'like', '%' . $search . '%')
+                      ->orWhere('month', 'like', '%' . $search . '%');
+            });
+        }
+        // $budgets = $user->budgets()->latest()->paginate(10);
+        $budgets = $query->latest()->paginate(10);
 
         return view('budgets.index', compact('budgets'));
     }
