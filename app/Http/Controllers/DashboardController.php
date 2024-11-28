@@ -25,7 +25,7 @@ class DashboardController extends Controller
 
             return (object) [
                 'category' => $budget->category,
-                'total_buget' => $budget->amount,
+                'total_budget' => $budget->amount,
                 'used' => $totalExpenses,
                 'remaining' => $budget->amount - $totalExpenses,
             ];

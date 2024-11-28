@@ -127,8 +127,7 @@
                             responsive: true,
                             plugins: {
                                 legend: {
-                                    display: true,
-                                    position: 'top',
+                                    display: false,
                                 },
                                 tooltip: {
                                     callbacks: {
@@ -140,7 +139,7 @@
                                 title: {
                                     display: true,
                                     text: 'Expenses by Category',
-                                    font: { size: 16 },
+                                    font: { size: 14 },
                                 },
                             },
                             scales: {
