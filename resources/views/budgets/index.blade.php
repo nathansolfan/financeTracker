@@ -52,26 +52,39 @@
                     <table class="min-w-full border-collapse border border-gray-200 dark:border-gray-700">
                         <thead>
                             <tr class="bg-gray-200 dark:bg-gray-700">
-                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ __('#') }}</th>
-                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ __('Category') }}</th>
-                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ __('Amount') }}</th>
-                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ __('Month') }}</th>
+                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">#</th>
+                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">Category</th>
+                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">Budget</th>
+                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">Spent</th>
+                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">Remaining</th>
+                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">Progress</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($budgets as $budget)
                                 <tr class="border-t border-gray-300 dark:border-gray-600">
-                                    <td class="px-4 py-2">{{ $budget->id }}</td>
+                                    <td class="px-4 py-2">{{ $loop->iteration }}</td>
                                     <td class="px-4 py-2">{{ $budget->category }}</td>
                                     <td class="px-4 py-2">{{ $budget->amount }}</td>
-                                    <td class="px-4 py-2">{{ $budget->month }}</td>
+                                    <td class="px-4 py-2">{{ $budget->total_expenses }}</td>
+                                    <td class="px-4 py-2">{{ $budget->remaining_budget }}</td>
+                                    <td class="px-4 py-2">
+                                        <div class="relative w-full bg-gray-200 rounded-md h-4">
+                                            <div
+                                                class="absolute top-0 left-0 h-4 bg-blue-500 rounded-md"
+                                                style="width: {{ min(100, ($budget->total_expenses / $budget->amount) * 100) }}%;"
+                                            ></div>
+                                        </div>
+                                        <span class="text-xs">{{ min(100, round(($budget->total_expenses / $budget->amount) * 100)) }}%</span>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="text-center py-4">{{ __('No budgets found.') }}</td>
+                                    <td colspan="6" class="text-center py-4">No budgets found.</td>
                                 </tr>
                             @endforelse
                         </tbody>
+
                     </table>
 
                     <!-- Pagination -->
