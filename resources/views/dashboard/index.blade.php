@@ -5,44 +5,51 @@
         </h2>
     </x-slot>
 
-
-
+    <!-- Main Content -->
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <!-- Financial Overview Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Financial Overview Section -->
+                <div class="col-span-1 lg:col-span-3 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
                     <h3 class="font-semibold text-lg mb-4">{{ __('Financial Overview') }}</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                         <!-- Total Income -->
-                        <div class="bg-green-100 dark:bg-green-800 p-4 rounded-md shadow">
-                            <h4 class="text-lg font-semibold">{{ __('Total Income') }}</h4>
-                            <p class="text-2xl font-bold">${{ $totalIncome }}</p>
+                        <div class="bg-green-100 dark:bg-green-800 p-4 rounded-md shadow flex items-center space-x-4">
+                            <div>
+                                <div class="text-green-700 dark:text-green-300 text-3xl font-bold">${{ $totalIncome }}</div>
+                                <div class="text-gray-600 dark:text-gray-400">{{ __('Total Income') }}</div>
+                            </div>
                         </div>
 
                         <!-- Total Expenses -->
-                        <div class="bg-red-100 dark:bg-red-800 p-4 rounded-md shadow">
-                            <h4 class="text-lg font-semibold">{{ __('Total Expenses') }}</h4>
-                            <p class="text-2xl font-bold">${{ $totalExpenses }}</p>
+                        <div class="bg-red-100 dark:bg-red-800 p-4 rounded-md shadow flex items-center space-x-4">
+                            <div>
+                                <div class="text-red-700 dark:text-red-300 text-3xl font-bold">${{ $totalExpenses }}</div>
+                                <div class="text-gray-600 dark:text-gray-400">{{ __('Total Expenses') }}</div>
+                            </div>
                         </div>
 
                         <!-- Remaining Balance -->
-                        <div class="bg-blue-100 dark:bg-blue-800 p-4 rounded-md shadow">
-                            <h4 class="text-lg font-semibold">{{ __('Remaining Balance') }}</h4>
-                            <p class="text-2xl font-bold">${{ $remainingBalance }}</p>
+                        <div class="bg-blue-100 dark:bg-blue-800 p-4 rounded-md shadow flex items-center space-x-4">
+                            <div>
+                                <div class="text-blue-700 dark:text-blue-300 text-3xl font-bold">${{ $remainingBalance }}</div>
+                                <div class="text-gray-600 dark:text-gray-400">{{ __('Remaining Balance') }}</div>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Budget Utilization Section -->
+                <!-- Budget Utilization Section -->
+                <div class="col-span-1 lg:col-span-3 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
                     <h3 class="font-semibold text-lg mb-4">{{ __('Budget Utilization') }}</h3>
                     <table class="min-w-full border-collapse border border-gray-200 dark:border-gray-700">
                         <thead>
-                            <tr class="bg-gray-200 dark:bg-gray-700">
-                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ __('Category') }}</th>
-                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ __('Total Budget') }}</th>
-                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ __('Spent') }}</th>
-                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ __('Remaining') }}</th>
-                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ __('Progress') }}</th>
+                            <tr class="bg-gray-200 dark:bg-gray-700 text-left text-sm font-semibold text-gray-800 dark:text-gray-200">
+                                <th class="px-4 py-2">{{ __('Category') }}</th>
+                                <th class="px-4 py-2">{{ __('Total Budget') }}</th>
+                                <th class="px-4 py-2">{{ __('Spent') }}</th>
+                                <th class="px-4 py-2">{{ __('Remaining') }}</th>
+                                <th class="px-4 py-2">{{ __('Progress') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -70,26 +77,35 @@
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Quick Links -->
+                <div class="col-span-1 lg:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <a href="{{ route('expenses.index') }}" class="bg-gray-200 dark:bg-gray-700 p-4 rounded-md shadow text-center hover:bg-gray-300 dark:hover:bg-gray-600">
+                        <div class="text-blue-500 mb-2">
+                            <i class="fas fa-wallet text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold">{{ __('Expenses') }}</h4>
+                    </a>
+                    <a href="{{ route('incomes.index') }}" class="bg-gray-200 dark:bg-gray-700 p-4 rounded-md shadow text-center hover:bg-gray-300 dark:hover:bg-gray-600">
+                        <div class="text-green-500 mb-2">
+                            <i class="fas fa-money-bill-wave text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold">{{ __('Incomes') }}</h4>
+                    </a>
+                    <a href="{{ route('budgets.index') }}" class="bg-gray-200 dark:bg-gray-700 p-4 rounded-md shadow text-center hover:bg-gray-300 dark:hover:bg-gray-600">
+                        <div class="text-purple-500 mb-2">
+                            <i class="fas fa-chart-pie text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold">{{ __('Budgets') }}</h4>
+                    </a>
+                    <a href="{{ route('grocery.index') }}" class="bg-gray-200 dark:bg-gray-700 p-4 rounded-md shadow text-center hover:bg-gray-300 dark:hover:bg-gray-600">
+                        <div class="text-yellow-500 mb-2">
+                            <i class="fas fa-shopping-cart text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold">{{ __('Grocery List') }}</h4>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-        <a href="{{ route('expenses.index') }}" class="bg-gray-200 dark:bg-gray-700 p-4 rounded-md shadow hover:bg-gray-300 dark:hover:bg-gray-600 text-center">
-            <h4 class="text-lg font-semibold">{{ __('Expenses') }}</h4>
-            <p class="text-blue-500 underline">{{ __('View Details') }}</p>
-        </a>
-        <a href="{{ route('incomes.index') }}" class="bg-gray-200 dark:bg-gray-700 p-4 rounded-md shadow hover:bg-gray-300 dark:hover:bg-gray-600 text-center">
-            <h4 class="text-lg font-semibold">{{ __('Incomes') }}</h4>
-            <p class="text-blue-500 underline">{{ __('View Details') }}</p>
-        </a>
-        <a href="{{ route('budgets.index') }}" class="bg-gray-200 dark:bg-gray-700 p-4 rounded-md shadow hover:bg-gray-300 dark:hover:bg-gray-600 text-center">
-            <h4 class="text-lg font-semibold">{{ __('Budgets') }}</h4>
-            <p class="text-blue-500 underline">{{ __('View Details') }}</p>
-        </a>
-        <a href="{{ route('grocery.index') }}" class="bg-gray-200 dark:bg-gray-700 p-4 rounded-md shadow hover:bg-gray-300 dark:hover:bg-gray-600 text-center">
-            <h4 class="text-lg font-semibold">{{ __('Grocery List') }}</h4>
-            <p class="text-blue-500 underline">{{ __('View Details') }}</p>
-        </a>
-    </div>
-
 </x-app-layout>
