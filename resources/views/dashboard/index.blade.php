@@ -5,6 +5,8 @@
         </h2>
     </x-slot>
 
+
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -71,4 +73,23 @@
             </div>
         </div>
     </div>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+        <a href="{{ route('expenses.index') }}" class="bg-gray-200 dark:bg-gray-700 p-4 rounded-md shadow hover:bg-gray-300 dark:hover:bg-gray-600 text-center">
+            <h4 class="text-lg font-semibold">{{ __('Expenses') }}</h4>
+            <p class="text-blue-500 underline">{{ __('View Details') }}</p>
+        </a>
+        <a href="{{ route('incomes.index') }}" class="bg-gray-200 dark:bg-gray-700 p-4 rounded-md shadow hover:bg-gray-300 dark:hover:bg-gray-600 text-center">
+            <h4 class="text-lg font-semibold">{{ __('Incomes') }}</h4>
+            <p class="text-blue-500 underline">{{ __('View Details') }}</p>
+        </a>
+        <a href="{{ route('budgets.index') }}" class="bg-gray-200 dark:bg-gray-700 p-4 rounded-md shadow hover:bg-gray-300 dark:hover:bg-gray-600 text-center">
+            <h4 class="text-lg font-semibold">{{ __('Budgets') }}</h4>
+            <p class="text-blue-500 underline">{{ __('View Details') }}</p>
+        </a>
+        <a href="{{ route('grocery.index') }}" class="bg-gray-200 dark:bg-gray-700 p-4 rounded-md shadow hover:bg-gray-300 dark:hover:bg-gray-600 text-center">
+            <h4 class="text-lg font-semibold">{{ __('Grocery List') }}</h4>
+            <p class="text-blue-500 underline">{{ __('View Details') }}</p>
+        </a>
+    </div>
+
 </x-app-layout>
