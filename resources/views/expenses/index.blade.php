@@ -76,6 +76,23 @@
                                     <td class="px-4 py-2 border">{{ $expense->category }}</td>
                                     <td class="px-4 py-2 border">{{ $expense->description }}</td>
                                     <td class="px-4 py-2 border">{{ $expense->date }}</td>
+                                    <td class="px-4 py-2 border">
+                                        <div class="flex space-x-2">
+                                            <!-- Edit Button -->
+                                            <a href="{{ route('expenses.edit', $expense->id) }}"
+                                               class="text-blue-500 hover:text-blue-700 underline">{{ __('Edit') }}</a>
+
+                                            <!-- Delete Button -->
+                                            <form method="POST" action="{{ route('expenses.destroy', $expense->id) }}" onsubmit="return confirm('Are you sure you want to delete this expense?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-500 hover:text-red-700 underline">
+                                                    {{ __('Delete') }}
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+
                                 </tr>
                             @empty
                                 <tr>

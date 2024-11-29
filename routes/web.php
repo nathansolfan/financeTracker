@@ -10,7 +10,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect('dashboard.index');
+    return redirect()->route('dashboard');
 });
 
 // Route::get('/dashboard', function () {
@@ -32,6 +32,10 @@ Route::middleware('auth')->group(function ()  {
     Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
     Route::get('/expenses/create', [ExpenseController::class, 'create'])->name('expenses.create');
     Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
+    Route::get('/expenses/{expense}/edit', [ExpenseController::class, 'edit'])->name('expenses.edit');
+    Route::patch('/expenses/{expense}', [ExpenseController::class, 'update'])->name('expenses.update');
+    Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expenses.destroy');
+
 
     // Income Route
     Route::get('/incomes', [IncomeController::class, 'index'])->name('incomes.index');
