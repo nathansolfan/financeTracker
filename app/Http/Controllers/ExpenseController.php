@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ExpenseController extends Controller
 {
-
-
-
     public function index(Request $request)
     {
         // retrieve all expenses
@@ -48,6 +45,7 @@ class ExpenseController extends Controller
             'description' => 'nullable|string|max:255',
             'date' => 'required|date',
         ]);
+
         $user = Auth::user();
         $user->expenses()->create($validated);
 

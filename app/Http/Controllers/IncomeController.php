@@ -45,4 +45,36 @@ class IncomeController extends Controller
 
         return redirect()->route('incomes.index')->with('success', 'Income has been created');
     }
+
+    public function edit($id)
+    {
+        $user = Auth::user();
+        $incomes = $user->incomes()->findOrFail($id);
+
+        return view('incomes.edit', compact('income'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'source' => 'required|numeric|min:0.01',
+            'amount' => 'required|string|max:255',
+            'date' => 'required|date',
+        ]);
+
+        $user = Auth::user();
+        $incomes = $user->incomes()->findOrFail($id);
+        $incomes->update($validated);
+
+        return redirect()->route('incomes.index')->with('success', 'Income has been updated');
+    }
+
+    public function destroy($id)
+    {
+        $user = Auth::user();
+        $incomes = $user->incomes()->findOrFail($id);
+        $incomes->delete();
+
+        return redirect()->route('incomes.index')->with('success', 'Income has been deleted');
+    }
 }
