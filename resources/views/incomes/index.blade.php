@@ -6,80 +6,103 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <!-- Success Message -->
-                    @if (session('success'))
-                        <div class="mb-4 text-green-500">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-
-                    <!-- Add Expense Button -->
-                    <div class="flex justify-end mb-4">
-                        <a href="{{ route('incomes.create') }}"
-                           class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-600 focus:bg-blue-600 focus:ring focus:ring-blue-300 focus:outline-none active:bg-blue-700 disabled:opacity-25 transition">
-                            {{ __('Add Income') }}
-                        </a>
-                    </div>
-
-                     <!-- Search Bar -->
-                     <form method="GET" action="{{ route('expenses.index') }}" class="mb-6">
-                        <div class="flex flex-wrap items-end gap-4">
-
-                            <!-- Search Input -->
-                            <div class="flex-1">
-                                <label for="search" class="block text-sm font-medium">{{ __('Search Expenses') }}</label>
-                                <input type="text" name="search" id="search" value="{{ request('search') }}"
-                                placeholder="Search by Amount, Source or Date"
-                                class="w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                            </div>
-
-                            <!-- Clear Search Button -->
-                            <a href="{{ route('expenses.index') }}"
-                            class="inline-flex items-center px-2 py-2 bg-gray-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-600 focus:bg-gray-600 focus:ring focus:ring-gray-300 focus:outline-none active:bg-gray-700 disabled:opacity-25 transition">
-                            {{ __('Clear Search') }}
-                            </a>
-
-                            <!-- Submit Button -->
-                            <button type="submit" class="inline-flex items-center px-2 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-600 focus:bg-blue-600 focus:ring focus:ring-blue-300 focus:outline-none active:bg-blue-700 disabled:opacity-25 transition">
-                                {{ __('Search') }}
-                            </button>
-                        </div>
-                    </form>
-
-                    <!-- Income Table -->
-                    <table class="min-w-full border-collapse border border-gray-200 dark:border-gray-700">
-                        <thead>
-                            <tr class="bg-gray-200 dark:bg-gray-700">
-                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ __('#') }}</th>
-                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ __('Amount') }}</th>
-                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ __('Source') }}</th>
-                                <th class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ __('Date') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($incomes as $income)
-                                <tr class="border-t border-gray-300 dark:border-gray-600">
-                                    <td class="px-4 py-2">{{ $income->id }}</td>
-                                    <td class="px-4 py-2">{{ $income->amount }}</td>
-                                    <td class="px-4 py-2">{{ $income->source }}</td>
-                                    <td class="px-4 py-2">{{ $income->date }}</td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="4" class="text-center py-4">{{ __('No income found.') }}</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-
-                    <!-- Pagination -->
-                    <div class="mt-6">
-                        {{ $incomes->links() }}
-                    </div>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <!-- Success Message -->
+            @if (session('success'))
+                <div class="bg-green-50 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow">
+                    {{ session('success') }}
                 </div>
+            @endif
+
+            <!-- Add Income Button -->
+            <div class="flex justify-end">
+                <a href="{{ route('incomes.create') }}"
+                   class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 transition">
+                    <i class="fas fa-plus mr-2"></i> {{ __('Add Income') }}
+                </a>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <form method="GET" action="{{ route('incomes.index') }}">
+                    <div class="flex flex-wrap items-end gap-4">
+                        <!-- Search Input -->
+                        <div class="flex-1">
+                            <label for="search" class="block text-sm font-medium text-gray-600 dark:text-gray-300">
+                                {{ __('Search Income') }}
+                            </label>
+                            <input type="text" name="search" id="search" value="{{ request('search') }}"
+                                   placeholder="Search by amount, source, or date"
+                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+
+                        <!-- Clear Search Button -->
+                        <a href="{{ route('incomes.index') }}"
+                           class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition">
+                            {{ __('Clear Search') }}
+                        </a>
+
+                        <!-- Submit Button -->
+                        <button type="submit"
+                                class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                            {{ __('Search') }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Income Table -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200 mb-4">{{ __('Income Details') }}</h3>
+                <table class="w-full border-collapse rounded-lg overflow-hidden">
+                    <thead>
+                    <tr class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+                        <th class="px-4 py-2 text-left">{{ __('#') }}</th>
+                        <th class="px-4 py-2 text-left">{{ __('Amount') }}</th>
+                        <th class="px-4 py-2 text-left">{{ __('Source') }}</th>
+                        <th class="px-4 py-2 text-left">{{ __('Date') }}</th>
+                        <th class="px-4 py-2 text-left">{{ __('Actions') }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @forelse ($incomes as $index => $income)
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <td class="px-4 py-2">{{ $index + 1 }}</td>
+                            <td class="px-4 py-2">${{ number_format($income->amount, 2) }}</td>
+                            <td class="px-4 py-2">{{ $income->source }}</td>
+                            <td class="px-4 py-2">{{ $income->date }}</td>
+                            <td class="px-4 py-2">
+                                <div class="flex space-x-2">
+                                    <!-- Edit Button -->
+                                    <a href="{{ route('incomes.edit', $income->id) }}"
+                                       class="text-blue-600 hover:text-blue-800 transition">
+                                        <i class="fas fa-edit"></i> {{ __('Edit') }}
+                                    </a>
+
+                                    <!-- Delete Button -->
+                                    <form method="POST" action="{{ route('incomes.destroy', $income->id) }}"
+                                          onsubmit="return confirm('Are you sure you want to delete this income?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-600 hover:text-red-800 transition">
+                                            <i class="fas fa-trash"></i> {{ __('Delete') }}
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-gray-500">{{ __('No income found.') }}</td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="mt-6">
+                {{ $incomes->links() }}
             </div>
         </div>
     </div>

@@ -49,7 +49,7 @@ class IncomeController extends Controller
     public function edit($id)
     {
         $user = Auth::user();
-        $incomes = $user->incomes()->findOrFail($id);
+        $income = $user->incomes()->findOrFail($id);
 
         return view('incomes.edit', compact('income'));
     }

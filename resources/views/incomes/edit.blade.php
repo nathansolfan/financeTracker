@@ -10,37 +10,26 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <!-- Edit Expense Form -->
-                    <form method="POST" action="{{ route('expenses.update', $expense->id) }}">
+                    <form method="POST" action="{{ route('incomes.update', $income->id) }}">
                         @csrf
                         @method('PATCH')
 
                         <!-- Amount -->
                         <div class="mb-4">
                             <label for="amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Amount') }}</label>
-                            <input type="number" name="amount" id="amount" value="{{ old('amount', $expense->amount) }}"
-                                   step="0.01"
-                                   class="w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <input type="number" name="amount" id="amount" value="{{ old('amount', $income->amount) }}"step="0.01"
+                            class="w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                             @error('amount')
-                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
                         </div>
 
-                        <!-- Category -->
+                        <!-- Source -->
                         <div class="mb-4">
-                            <label for="category" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Category') }}</label>
-                            <input type="text" name="category" id="category" value="{{ old('category', $expense->category) }}"
+                            <label for="source" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Source') }}</label>
+                            <input type="text" name="source" id="source" value="{{ old('source', $income->source) }}"
                                    class="w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                            @error('category')
-                                <span class="text-red-500 text-sm">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <!-- Description -->
-                        <div class="mb-4">
-                            <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Description') }}</label>
-                            <textarea name="description" id="description"
-                                      class="w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">{{ old('description', $expense->description) }}</textarea>
-                            @error('description')
+                            @error('source')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
                         </div>
@@ -48,7 +37,17 @@
                         <!-- Date -->
                         <div class="mb-4">
                             <label for="date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Date') }}</label>
-                            <input type="date" name="date" id="date" value="{{ old('date', $expense->date) }}"
+                            <input type="date" name="date" id="date" value="{{ old('date', $income->date) }}"
+                                   class="w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            @error('date')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <!-- Date -->
+                        <div class="mb-4">
+                            <label for="date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Date') }}</label>
+                            <input type="date" name="date" id="date" value="{{ old('date', $income->date) }}"
                                    class="w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                             @error('date')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
