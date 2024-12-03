@@ -42,41 +42,45 @@
                 <!-- Budget Utilization Section -->
                 <div class="col-span-1 lg:col-span-3 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
                     <h3 class="font-semibold text-lg mb-4">{{ __('Budget Utilization') }}</h3>
-                    <table class="min-w-full border-collapse border border-gray-200 dark:border-gray-700">
-                        <thead>
-                            <tr class="bg-gray-200 dark:bg-gray-700 text-left text-sm font-semibold text-gray-800 dark:text-gray-200">
-                                <th class="px-4 py-2">{{ __('Category') }}</th>
-                                <th class="px-4 py-2">{{ __('Total Budget') }}</th>
-                                <th class="px-4 py-2">{{ __('Spent') }}</th>
-                                <th class="px-4 py-2">{{ __('Remaining') }}</th>
-                                <th class="px-4 py-2">{{ __('Progress') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($budgetUtilization as $budget)
-                                <tr class="border-t border-gray-300 dark:border-gray-600">
-                                    <td class="px-4 py-2">{{ $budget->category }}</td>
-                                    <td class="px-4 py-2">${{ $budget->total_budget }}</td>
-                                    <td class="px-4 py-2">${{ $budget->used }}</td>
-                                    <td class="px-4 py-2">${{ $budget->remaining }}</td>
-                                    <td class="px-4 py-2">
-                                        <div class="relative w-full bg-gray-200 dark:bg-gray-700 rounded-md h-4">
-                                            <div
-                                                class="absolute top-0 left-0 h-4 bg-blue-500 rounded-md"
-                                                style="width: {{ min(100, ($budget->used / $budget->total_budget) * 100) }}%;"
-                                            ></div>
-                                        </div>
-                                        <span class="text-xs">{{ min(100, round(($budget->used / $budget->total_budget) * 100)) }}%</span>
-                                    </td>
+                    <!-- Add overflow-x-auto for scrolling on small screens -->
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full border-collapse border border-gray-200 dark:border-gray-700">
+                            <thead>
+                                <tr class="bg-gray-200 dark:bg-gray-700 text-left text-sm font-semibold text-gray-800 dark:text-gray-200">
+                                    <th class="px-2 md:px-4 py-2">{{ __('Category') }}</th>
+                                    <th class="px-2 md:px-4 py-2">{{ __('Total Budget') }}</th>
+                                    <th class="px-2 md:px-4 py-2">{{ __('Spent') }}</th>
+                                    <th class="px-2 md:px-4 py-2">{{ __('Remaining') }}</th>
+                                    <th class="px-2 md:px-4 py-2">{{ __('Progress') }}</th>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="5" class="text-center py-4">{{ __('No budgets found.') }}</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @forelse ($budgetUtilization as $budget)
+                                    <tr class="border-t border-gray-300 dark:border-gray-600">
+                                        <td class="px-2 md:px-4 py-2 text-sm">{{ $budget->category }}</td>
+                                        <td class="px-2 md:px-4 py-2 text-sm">${{ $budget->total_budget }}</td>
+                                        <td class="px-2 md:px-4 py-2 text-sm">${{ $budget->used }}</td>
+                                        <td class="px-2 md:px-4 py-2 text-sm">${{ $budget->remaining }}</td>
+                                        <td class="px-2 md:px-4 py-2 text-sm">
+                                            <div class="relative w-full bg-gray-200 dark:bg-gray-700 rounded-md h-4">
+                                                <div
+                                                    class="absolute top-0 left-0 h-4 bg-blue-500 rounded-md"
+                                                    style="width: {{ min(100, ($budget->used / $budget->total_budget) * 100) }}%;"
+                                                ></div>
+                                            </div>
+                                            <span class="text-xs">{{ min(100, round(($budget->used / $budget->total_budget) * 100)) }}%</span>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="text-center py-4">{{ __('No budgets found.') }}</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+                
 
                 <!-- Quick Links -->
                 <div class="col-span-1 lg:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-4">
