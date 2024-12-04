@@ -13,28 +13,38 @@
                     <h3 class="font-semibold text-lg mb-4">{{ __('Financial Overview') }}</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                         <!-- Total Income -->
-                        <div class="bg-green-100 dark:bg-green-800 p-4 rounded-md shadow flex items-center space-x-4">
+                        <a href="{{ route('incomes.index') }}"
+                           class="bg-green-100 dark:bg-green-800 p-4 rounded-md shadow flex items-center space-x-4 hover:bg-green-200 dark:hover:bg-green-700 transition">
                             <div>
-                                <div class="text-green-700 dark:text-green-300 text-3xl font-bold">${{ $totalIncome }}</div>
+                                <div class="text-green-700 dark:text-green-300 text-3xl font-bold">
+                                    ${{ $totalIncome }}
+                                </div>
                                 <div class="text-gray-600 dark:text-gray-400">{{ __('Total Income') }}</div>
                             </div>
-                        </div>
+                        </a>
                         <!-- Total Expenses -->
-                        <div class="bg-red-100 dark:bg-red-800 p-4 rounded-md shadow flex items-center space-x-4">
+                        <a href="{{ route('expenses.index') }}"
+                           class="bg-red-100 dark:bg-red-800 p-4 rounded-md shadow flex items-center space-x-4 hover:bg-red-200 dark:hover:bg-red-700 transition">
                             <div>
-                                <div class="text-red-700 dark:text-red-300 text-3xl font-bold">${{ $totalExpenses }}</div>
+                                <div class="text-red-700 dark:text-red-300 text-3xl font-bold">
+                                    ${{ $totalExpenses }}
+                                </div>
                                 <div class="text-gray-600 dark:text-gray-400">{{ __('Total Expenses') }}</div>
                             </div>
-                        </div>
+                        </a>
                         <!-- Remaining Balance -->
-                        <div class="bg-blue-100 dark:bg-blue-800 p-4 rounded-md shadow flex items-center space-x-4">
+                        <a href="{{ route('budgets.index') }}"
+                           class="bg-blue-100 dark:bg-blue-800 p-4 rounded-md shadow flex items-center space-x-4 hover:bg-blue-200 dark:hover:bg-blue-700 transition">
                             <div>
-                                <div class="text-blue-700 dark:text-blue-300 text-3xl font-bold">${{ $remainingBalance }}</div>
+                                <div class="text-blue-700 dark:text-blue-300 text-3xl font-bold">
+                                    ${{ $remainingBalance }}
+                                </div>
                                 <div class="text-gray-600 dark:text-gray-400">{{ __('Remaining Balance') }}</div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
+
                 <!-- Budget Utilization Section -->
                 <div class="col-span-1 lg:col-span-3 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
                     <h3 class="font-semibold text-lg mb-4">{{ __('Budget Utilization') }}</h3>
@@ -68,13 +78,14 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="text-center py-4">{{ __('No budgets foundd.') }}</td>
+                                        <td colspan="5" class="text-center py-4">{{ __('No budgets found.') }}</td>
                                     </tr>
                                 @endforelse
                             </tbody>
                         </table>
                     </div>
                 </div>
+
                 <!-- Quick Links -->
                 <div class="col-span-1 lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                     <a href="{{ route('expenses.index') }}" class="p-2 sm:p-4 rounded-md shadow text-center hover:bg-gray-300 dark:hover:bg-gray-600">
