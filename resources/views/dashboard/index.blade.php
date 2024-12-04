@@ -68,7 +68,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="text-center py-4">{{ __('No budgets found.') }}</td>
+                                        <td colspan="5" class="text-center py-4">{{ __('No budgets foundd.') }}</td>
                                     </tr>
                                 @endforelse
                             </tbody>
