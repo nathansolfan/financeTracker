@@ -88,17 +88,27 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const ctx = document.getElementById('categoryChart').getContext('2d');
-        const data = {
-            labels: @json(array_keys($expensesByCategory->toArray())),
-            datasets: [{
-                data: @json(array_values($expensesByCategory->toArray())),
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
-            }]
-        };
+const data = {
+    labels: @json(array_keys($expensesByCategory->toArray())), // Categories
+    datasets: [{
+        label: 'Expenses by Category',
+        data: @json(array_values($expensesByCategory->toArray())), // Amounts
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+    }]
+};
 
-        new Chart(ctx, {
-            type: 'bar',
-            data: data,
-        });
+new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: true },
+            title: { display: true, text: 'Expenses by Category' }
+        },
+        scales: { y: { beginAtZero: true } }
+    }
+});
+
     </script>
 </x-app-layout>

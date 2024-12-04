@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Budget;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -70,5 +71,33 @@ class BudgetController extends Controller
         $user->budgets()->create($validated);
 
         return redirect()->route('budgets.index')->with('success', 'Budget has been added');
+    }
+
+    public function edit($id)
+    {
+        $budget = Auth::user()->budgets()->findOrFail($id);
+        return view('budgets.edit', compact('budget'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'category' => 'nullable|string|max:255',
+            'amount' => 'required|numeric|min:0.01',
+            'month' => 'required|date',
+        ]);
+
+        $budget = Auth::user()->budgets()->findOrFail();
+        $budget->update($validated);
+
+        return redirect()->route('budgets.index')->with('success', 'Budget has been updated');
+    }
+
+    public function destroy($id)
+    {
+        $budget = Auth::user()->budgets()->findOrfail($id);
+        $budget->delete();
+
+        return redirect()->route('budgets.index')->with('success', 'Budget has been deleted');
     }
 }
