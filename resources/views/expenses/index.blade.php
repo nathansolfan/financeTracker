@@ -60,53 +60,80 @@
             <!-- Expenses Table -->
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
                 <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200 mb-4">{{ __('Expense Details') }}</h3>
-                <table class="w-full border-collapse rounded-lg overflow-hidden">
-                    <thead>
-                    <tr class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
-                        <th class="px-4 py-2 text-left">{{ __('#') }}</th>
-                        <th class="px-4 py-2 text-left">{{ __('Amount') }}</th>
-                        <th class="px-4 py-2 text-left">{{ __('Category') }}</th>
-                        <th class="px-4 py-2 text-left">{{ __('Description') }}</th>
-                        <th class="px-4 py-2 text-left">{{ __('Date') }}</th>
-                        <th class="px-4 py-2 text-left">{{ __('Actions') }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                <div class="hidden sm:block overflow-x-auto">
+                    <table class="w-full border-collapse rounded-lg overflow-hidden">
+                        <thead>
+                        <tr class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+                            <th class="px-4 py-2 text-left">{{ __('#') }}</th>
+                            <th class="px-4 py-2 text-left">{{ __('Amount') }}</th>
+                            <th class="px-4 py-2 text-left">{{ __('Category') }}</th>
+                            <th class="px-4 py-2 text-left">{{ __('Description') }}</th>
+                            <th class="px-4 py-2 text-left">{{ __('Date') }}</th>
+                            <th class="px-4 py-2 text-left">{{ __('Actions') }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @forelse ($expenses as $index => $expense)
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                                <td class="px-4 py-2">{{ $index + 1 }}</td>
+                                <td class="px-4 py-2">${{ number_format($expense->amount, 2) }}</td>
+                                <td class="px-4 py-2">{{ $expense->category }}</td>
+                                <td class="px-4 py-2">{{ $expense->description }}</td>
+                                <td class="px-4 py-2">{{ $expense->date }}</td>
+                                <td class="px-4 py-2">
+                                    <div class="flex space-x-2">
+                                        <a href="{{ route('expenses.edit', $expense->id) }}"
+                                           class="text-blue-600 hover:text-blue-800 transition">
+                                            <i class="fas fa-edit"></i> {{ __('Edit') }}
+                                        </a>
+                                        <form method="POST" action="{{ route('expenses.destroy', $expense->id) }}"
+                                              onsubmit="return confirm('Are you sure you want to delete this expense?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-600 hover:text-red-800 transition">
+                                                <i class="fas fa-trash"></i> {{ __('Delete') }}
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="text-center py-4 text-gray-500">{{ __('No expenses found.') }}</td>
+                            </tr>
+                        @endforelse
+                        </tbody>
+                    </table>
+                </div>
+                <div class="sm:hidden">
                     @forelse ($expenses as $index => $expense)
-                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                            <td class="px-4 py-2">{{ $index + 1 }}</td>
-                            <td class="px-4 py-2">${{ number_format($expense->amount, 2) }}</td>
-                            <td class="px-4 py-2">{{ $expense->category }}</td>
-                            <td class="px-4 py-2">{{ $expense->description }}</td>
-                            <td class="px-4 py-2">{{ $expense->date }}</td>
-                            <td class="px-4 py-2">
-                                <div class="flex space-x-2">
-                                    <!-- Edit Button -->
-                                    <a href="{{ route('expenses.edit', $expense->id) }}"
-                                       class="text-blue-600 hover:text-blue-800 transition">
-                                        <i class="fas fa-edit"></i> {{ __('Edit') }}
-                                    </a>
-
-                                    <!-- Delete Button -->
-                                    <form method="POST" action="{{ route('expenses.destroy', $expense->id) }}"
-                                          onsubmit="return confirm('Are you sure you want to delete this expense?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-800 transition">
-                                            <i class="fas fa-trash"></i> {{ __('Delete') }}
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
+                        <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg mb-4">
+                            <div><strong>{{ __('#') }}</strong>: {{ $index + 1 }}</div>
+                            <div><strong>{{ __('Amount') }}</strong>: ${{ number_format($expense->amount, 2) }}</div>
+                            <div><strong>{{ __('Category') }}</strong>: {{ $expense->category }}</div>
+                            <div><strong>{{ __('Description') }}</strong>: {{ $expense->description }}</div>
+                            <div><strong>{{ __('Date') }}</strong>: {{ $expense->date }}</div>
+                            <div class="mt-2 flex space-x-2">
+                                <a href="{{ route('expenses.edit', $expense->id) }}"
+                                   class="text-blue-600 hover:text-blue-800 transition">
+                                    <i class="fas fa-edit"></i> {{ __('Edit') }}
+                                </a>
+                                <form method="POST" action="{{ route('expenses.destroy', $expense->id) }}"
+                                      onsubmit="return confirm('Are you sure you want to delete this expense?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 hover:text-red-800 transition">
+                                        <i class="fas fa-trash"></i> {{ __('Delete') }}
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     @empty
-                        <tr>
-                            <td colspan="6" class="text-center py-4 text-gray-500">{{ __('No expenses found.') }}</td>
-                        </tr>
+                        <div class="text-center py-4 text-gray-500">{{ __('No expenses found.') }}</div>
                     @endforelse
-                    </tbody>
-                </table>
+                </div>
             </div>
+
 
             <!-- Pagination -->
             <div class="mt-6">
