@@ -87,7 +87,7 @@ class BudgetController extends Controller
             'month' => 'required|date',
         ]);
 
-        $budget = Auth::user()->budgets()->findOrFail();
+        $budget = Auth::user()->budgets()->findOrFail($id);
         $budget->update($validated);
 
         return redirect()->route('budgets.index')->with('success', 'Budget has been updated');
