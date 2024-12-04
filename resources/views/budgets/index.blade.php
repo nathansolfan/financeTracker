@@ -90,7 +90,7 @@
     </div>
 
     <!-- Chart.js Script -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const ctx = document.getElementById('categoryChart').getContext('2d');
 const data = {
@@ -115,5 +115,5 @@ new Chart(ctx, {
     }
 });
 
-    </script>
+    </script> --}}
 </x-app-layout>
