@@ -38,7 +38,7 @@
                                 {{ __('Search Expenses') }}
                             </label>
                             <input type="text" name="search" id="search" value="{{ request('search') }}"
-                                   placeholder="Search by description, category, or amount"
+                                   placeholder="Search data"
                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
                         </div>
 

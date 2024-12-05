@@ -32,7 +32,7 @@
                                 {{ __('Search Income') }}
                             </label>
                             <input type="text" name="search" id="search" value="{{ request('search') }}"
-                                   placeholder="Search by amount, source, or date"
+                                   placeholder="Search data"
                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
                         </div>
 
