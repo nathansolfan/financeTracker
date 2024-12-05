@@ -9,50 +9,71 @@ use Illuminate\Support\Facades\Auth;
 class BudgetController extends Controller
 {
     public function index(Request $request)
-    {
-        $user = Auth::user();
-        $query = $user->budgets();
+{
+    $user = Auth::user();
+    $query = $user->budgets();
 
-        // Apply the search
-        if ($request->filled('search')) {
+    // Apply the search filters
+    if ($request->filled('search')) {
+        $search = $request->search;
+        $query->where(function ($query) use ($search) {
+            $query->where('description', 'like', '%' . $search . '%')
+                  ->orWhere('category', 'like', '%' . $search . '%')
+                  ->orWhere('month', 'like', '%' . $search . '%');
+        });
+    }
 
-            $search = $request->search;
-            $query->where(function ($query) use ($search) {
-                $query->where('description', 'like', '%' . $search . '%')
-                      ->orWhere('category', 'like', '%' . $search . '%')
-                      ->orWhere('month', 'like', '%' . $search . '%');
-            });
-        }
-        // $budgets = $user->budgets()->latest()->paginate(10);
-        $budgets = $query->latest()->paginate(10);
+    // Filter by category
+    if ($request->filled('category')) {
+        $query->where('category', $request->category);
+    }
 
-        // Calculate budget for each category
-        $totalBudget = 0;
-        $totalSpent = 0;
+    // Filter by month
+    if ($request->filled('month')) {
+        $query->where('month', 'like', $request->month . '%');
+    }
 
-        foreach ($budgets as $budget) {
-            $budget->total_expenses = $user->expenses()
+    // Retrieve filtered budgets
+    $budgets = $query->latest()->paginate(10);
+
+    // Calculate budget details
+    $totalBudget = 0;
+    $totalSpent = 0;
+    foreach ($budgets as $budget) {
+        $budget->total_expenses = $user->expenses()
             ->where('category', $budget->category)
             ->whereMonth('date', date('m', strtotime($budget->month)))
             ->sum('amount');
-            $budget->remaining_budget = $budget->amount - $budget->total_expenses;
-            $budget->over_budget = $budget->remaining_budget < 0;
+        $budget->remaining_budget = $budget->amount - $budget->total_expenses;
+        $budget->over_budget = $budget->remaining_budget < 0;
 
-            $totalBudget += $budget->amount;
-            $totalSpent += $budget->total_expenses;
-        }
+        $totalBudget += $budget->amount;
+        $totalSpent += $budget->total_expenses;
+    }
 
-        $remainingBudget = $totalBudget - $totalSpent;
+    $remainingBudget = $totalBudget - $totalSpent;
 
-        // Fetch by category
-        $expensesByCategory = $user->expenses()
+    // **Fix for undefined $categories** - Fetch unique categories from budgets
+    $categories = $user->budgets()->distinct('category')->pluck('category');
+
+    // Fetch expenses by category (if needed for additional features)
+    $expensesByCategory = $user->expenses()
         ->whereMonth('date', now()->month)
         ->selectRaw('category, SUM(amount) as total')
         ->groupBy('category')
         ->pluck('total', 'category');
 
-        return view('budgets.index',compact('budgets', 'totalBudget', 'totalSpent', 'remainingBudget', 'expensesByCategory'));
-    }
+    return view('budgets.index', compact(
+        'budgets',
+        'totalBudget',
+        'totalSpent',
+        'remainingBudget',
+        'expensesByCategory',
+        'categories'
+    ));
+}
+
+
 
     public function create()
     {
