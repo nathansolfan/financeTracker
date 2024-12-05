@@ -39,57 +39,59 @@
             @endif
 
             <!-- Budgets Table -->
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                <table class="min-w-full border-collapse">
-                    <thead>
-                        <tr class="bg-gray-200 dark:bg-gray-700">
-                            <th class="px-4 py-2">#</th>
-                            <th class="px-4 py-2">Category</th>
-                            <th class="px-4 py-2">Budget</th>
-                            <th class="px-4 py-2">Spent</th>
-                            <th class="px-4 py-2">Remaining</th>
-                            <th class="px-4 py-2">Progress</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($budgets as $budget)
-                            <tr class="{{ $budget->over_budget ? 'bg-red-100' : '' }}">
-                                <td class="px-4 py-2">{{ $loop->iteration }}</td>
-                                <td class="px-4 py-2">{{ $budget->category }}</td>
-                                <td class="px-4 py-2">${{ number_format($budget->amount, 2) }}</td>
-                                <td class="px-4 py-2">${{ number_format($budget->total_expenses, 2) }}</td>
-                                <td class="px-4 py-2">
-                                    <span class="{{ $budget->remaining_budget < 0 ? 'text-red-500' : 'text-green-500' }}">
-                                        ${{ number_format($budget->remaining_budget, 2) }}
-                                    </span>
-                                </td>
-                                <td class="px-4 py-2">
-                                    <div class="relative w-full bg-gray-200 h-4 rounded">
-                                        <div
-                                            class="absolute top-0 left-0 h-4 {{ $budget->over_budget ? 'bg-red-500' : 'bg-blue-500' }} rounded"
-                                            style="width: {{ min(100, ($budget->total_expenses / $budget->amount) * 100) }}%;"
-                                        ></div>
-                                    </div>
-                                    <span class="text-xs">{{ min(100, round(($budget->total_expenses / $budget->amount) * 100)) }}%</span>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="text-center py-4">{{ __('No budgets found.') }}</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
+            <!-- Budgets Table -->
+<div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+    <div class="overflow-x-auto"> <!-- Add this wrapper for horizontal scrolling -->
+        <table class="min-w-full border-collapse">
+            <thead>
+                <tr class="bg-gray-200 dark:bg-gray-700">
+                    <th class="px-4 py-2">#</th>
+                    <th class="px-4 py-2">Category</th>
+                    <th class="px-4 py-2">Budget</th>
+                    <th class="px-4 py-2">Spent</th>
+                    <th class="px-4 py-2">Remaining</th>
+                    <th class="px-4 py-2">Progress</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($budgets as $budget)
+                    <tr class="{{ $budget->over_budget ? 'bg-red-100' : '' }}">
+                        <td class="px-4 py-2">{{ $loop->iteration }}</td>
+                        <td class="px-4 py-2">{{ $budget->category }}</td>
+                        <td class="px-4 py-2">${{ number_format($budget->amount, 2) }}</td>
+                        <td class="px-4 py-2">${{ number_format($budget->total_expenses, 2) }}</td>
+                        <td class="px-4 py-2">
+                            <span class="{{ $budget->remaining_budget < 0 ? 'text-red-500' : 'text-green-500' }}">
+                                ${{ number_format($budget->remaining_budget, 2) }}
+                            </span>
+                        </td>
+                        <td class="px-4 py-2">
+                            <div class="relative w-full bg-gray-200 h-4 rounded">
+                                <div
+                                    class="absolute top-0 left-0 h-4 {{ $budget->over_budget ? 'bg-red-500' : 'bg-blue-500' }} rounded"
+                                    style="width: {{ min(100, ($budget->total_expenses / $budget->amount) * 100) }}%;"
+                                ></div>
+                            </div>
+                            <span class="text-xs">{{ min(100, round(($budget->total_expenses / $budget->amount) * 100)) }}%</span>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="6" class="text-center py-4">{{ __('No budgets found.') }}</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
 
 
-
-            {{-- <!-- Chart Section -->
+    {{-- <!-- Chart Section -->
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
                 <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200">{{ __('Expenses by Category') }}</h3>
                 <canvas id="categoryChart" class="w-full h-64"></canvas>
             </div> --}}
 
-        </div>
-    </div>
 
     <!-- Chart.js Script -->
     {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
