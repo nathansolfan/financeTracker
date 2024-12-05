@@ -9,20 +9,27 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
             <!-- Summary Section -->
-            <div class="grid grid-cols-3 gap-4">
-                <div class="p-4 bg-green-100 rounded-md shadow">
-                    <h3 class="font-bold text-lg text-green-700">{{ __('Total Budget') }}</h3>
-                    <p class="text-2xl">${{ number_format($totalBudget, 2) }}</p>
-                </div>
-                <div class="p-4 bg-yellow-100 rounded-md shadow">
-                    <h3 class="font-bold text-lg text-yellow-700">{{ __('Total Spent') }}</h3>
-                    <p class="text-2xl">${{ number_format($totalSpent, 2) }}</p>
-                </div>
-                <div class="p-4 bg-blue-100 rounded-md shadow">
-                    <h3 class="font-bold text-lg text-blue-700">{{ __('Remaining Budget') }}</h3>
-                    <p class="text-2xl">${{ number_format($remainingBudget, 2) }}</p>
-                </div>
-            </div>
+<div class="grid grid-cols-3 gap-4">
+    <div class="p-4 bg-green-100 rounded-md shadow">
+        <h3 class="font-bold text-lg text-green-700">{{ __('Total Budget') }}</h3>
+        <p class="text-2xl">${{ number_format($totalBudget, 2) }}</p>
+    </div>
+    <div class="p-4 bg-yellow-100 rounded-md shadow">
+        <h3 class="font-bold text-lg text-yellow-700">{{ __('Total Spent') }}</h3>
+        <p class="text-2xl">${{ number_format($totalSpent, 2) }}</p>
+    </div>
+    <div class="p-4 bg-blue-100 rounded-md shadow">
+        <h3 class="font-bold text-lg text-blue-700">{{ __('Remaining Budget') }}</h3>
+        <p class="text-2xl">${{ number_format($remainingBudget, 2) }}</p>
+    </div>
+    <div class="p-4 bg-purple-100 rounded-md shadow">
+        <h3 class="font-bold text-lg text-purple-700">{{ __('Potential Savings') }}</h3>
+        <p class="text-2xl">${{ number_format($remainingBudget > 0 ? $remainingBudget : 0, 2) }}</p>
+    </div>
+</div>
+
+
+
 
             <!-- Warning for Over-Budget Categories -->
             @if($budgets->where('over_budget', true)->isNotEmpty())
@@ -57,19 +64,13 @@
                                     </span>
                                 </td>
                                 <td class="px-4 py-2">
-                                    <div class="flex space-x-2">
-                                        <!-- Edit Link -->
-                                        <a href="{{ route('budgets.edit', $budget->id) }}" class="text-blue-600 hover:text-blue-800">
-                                            Edit
-                                        </a>
-
-                                        <!-- Delete Form -->
-                                        <form action="{{ route('budgets.destroy', $budget->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this budget?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="text-red-600 hover:text-red-800">Delete</button>
-                                        </form>
+                                    <div class="relative w-full bg-gray-200 h-4 rounded">
+                                        <div
+                                            class="absolute top-0 left-0 h-4 {{ $budget->over_budget ? 'bg-red-500' : 'bg-blue-500' }} rounded"
+                                            style="width: {{ min(100, ($budget->total_expenses / $budget->amount) * 100) }}%;"
+                                        ></div>
                                     </div>
+                                    <span class="text-xs">{{ min(100, round(($budget->total_expenses / $budget->amount) * 100)) }}%</span>
                                 </td>
                             </tr>
                         @empty
@@ -80,11 +81,12 @@
                     </tbody>
 
 
-            <!-- Chart Section -->
+
+            {{-- <!-- Chart Section -->
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
                 <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200">{{ __('Expenses by Category') }}</h3>
                 <canvas id="categoryChart" class="w-full h-64"></canvas>
-            </div>
+            </div> --}}
 
         </div>
     </div>
