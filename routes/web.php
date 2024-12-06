@@ -52,6 +52,9 @@ Route::middleware('auth')->group(function ()  {
     Route::get('/budgets/{budget}/edit', [BudgetController::class, 'edit'])->name('budgets.edit');
     Route::patch('/budgets/{budget}', [BudgetController::class, 'update'])->name('budgets.update');
     Route::delete('/budgets/{budget}', [BudgetController::class, 'destroy'])->name('budgets.destroy');
+    Route::get('/budgets/export', [BudgetController::class, 'export'])->name('budgets.export');
+
+
 
     // Grocery Route
     Route::get('/grocery', [GroceryListController::class, 'index'])->name('grocery.index');
