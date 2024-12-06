@@ -10,6 +10,12 @@
 
             <!-- Filter Section -->
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <div class="flex justify-end">
+                    <a href="{{ route('budgets.create') }}"
+                       class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 transition">
+                        <i class="fas fa-plus mr-2"></i> {{ __('Add Budget') }}
+                    </a>
+                </div>
                 <form method="GET" action="{{ route('budgets.index') }}">
                     <div class="flex flex-wrap items-end gap-4">
                         <!-- Category Filter -->
@@ -45,6 +51,14 @@
                         class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition">
                         {{ __('Clear Filters') }}
                         </a>
+
+                        <div class="flex justify-end">
+                            <a href="{{ route('budgets.export') }}"
+                               class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition">
+                                {{ __('Download CSV') }}
+                            </a>
+                        </div>
+
                     </div>
                 </form>
             </div>
