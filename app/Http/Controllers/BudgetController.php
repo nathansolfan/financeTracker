@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Budget;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 
 class BudgetController extends Controller
 {
@@ -74,7 +75,6 @@ class BudgetController extends Controller
 }
 
 
-
     public function create()
     {
         return view('budgets.create');
@@ -121,4 +121,32 @@ class BudgetController extends Controller
 
         return redirect()->route('budgets.index')->with('success', 'Budget has been deleted');
     }
+
+
+    public function export()
+    {
+        $user = Auth::user();
+        $budgets = $user->budgets()->get();
+
+        $csvData = "Category,Budget,Spent,Remaining\n";
+
+        foreach ($budgets as $budget) {
+            $totalExpenses = $user->expenses()
+            ->where('category', $budget->category)
+            ->whereMonth('date', date('m', strtotime($budget->month)))
+            ->sum('amount');
+
+            $remainingBudget = $budget->amount - $totalExpenses;
+
+            $csvData .= "{$budget->category},{$budget->amount},{$totalExpenses},{$remainingBudget}\n";
+        }
+
+        return Response::make($csvData, 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="budgets.csv"',
+        ]);
+    }
+
+
+
 }
