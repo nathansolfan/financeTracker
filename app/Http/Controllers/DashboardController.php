@@ -19,9 +19,9 @@ class DashboardController extends Controller
         // Budget Utilization
         $budgetUtilization = $user->budgets()->get()->map(function ($budget) use ($user) {
             $totalExpenses = $user->expenses()
-            ->where('category', $budget->category)
-            ->whereMonth('date', date('m', strtotime($budget->month)))
-            ->sum('amount');
+                ->where('category', $budget->category)
+                ->whereMonth('date', date('m', strtotime($budget->month)))
+                ->sum('amount');
 
             return (object) [
                 'category' => $budget->category,
@@ -31,12 +31,24 @@ class DashboardController extends Controller
             ];
         });
 
-        // Pass all variables to the view
+        // Categories nearing or exceeding budgets
+        $overBudgetCategories = $user->budgets()
+            ->get()
+            ->filter(function ($budget) use ($user) {
+                $totalExpenses = $user->expenses()
+                    ->where('category', $budget->category)
+                    ->whereMonth('date', date('m', strtotime($budget->month)))
+                    ->sum('amount');
+                return $totalExpenses > $budget->amount;
+            })
+            ->pluck('category');
+
         return view('dashboard.index', compact(
             'totalIncome',
             'totalExpenses',
             'remainingBalance',
-            'budgetUtilization'
+            'budgetUtilization',
+            'overBudgetCategories'
         ));
     }
 }
