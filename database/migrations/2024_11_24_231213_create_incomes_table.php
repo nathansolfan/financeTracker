@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('source');
             $table->decimal('amount', 10,2);
             $table->date('date');
+            $table->boolean('recurring')->default(false);
+
             $table->timestamps();
         });
     }

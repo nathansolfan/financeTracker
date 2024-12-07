@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('category');
             $table->string('description');
             $table->date('date');
+            $table->boolean('recurring')->default(false);
+
             $table->timestamps();
         });
     }
