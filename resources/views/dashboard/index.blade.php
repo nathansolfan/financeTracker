@@ -106,12 +106,12 @@
                         </div>
                         <h4 class="text-lg font-semibold">{{ __('Budgets') }}</h4>
                     </a>
-                    <a href="{{ route('grocery.index') }}" class="p-2 sm:p-4 rounded-md shadow text-center hover:bg-gray-300 dark:hover:bg-gray-600">
+                    {{-- <a href="{{ route('grocery.index') }}" class="p-2 sm:p-4 rounded-md shadow text-center hover:bg-gray-300 dark:hover:bg-gray-600">
                         <div class="text-yellow-500 mb-2">
                             <i class="fas fa-shopping-cart text-2xl"></i>
                         </div>
                         <h4 class="text-lg font-semibold">{{ __('Grocery List') }}</h4>
-                    </a>
+                    </a> --}}
                 </div>
             </div>
         </div>
