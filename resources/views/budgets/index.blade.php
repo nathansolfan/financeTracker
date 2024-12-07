@@ -64,50 +64,64 @@
             </div>
 
             <!-- Budgets Table -->
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                <table class="min-w-full border-collapse">
-                    <thead>
-                    <tr class="bg-gray-200 dark:bg-gray-700 text-left">
-                        <th class="px-4 py-2">{{ __('#') }}</th>
-                        <th class="px-4 py-2">{{ __('Category') }}</th>
-                        <th class="px-4 py-2">{{ __('Budget') }}</th>
-                        <th class="px-4 py-2">{{ __('Spent') }}</th>
-                        <th class="px-4 py-2">{{ __('Remaining') }}</th>
-                        <th class="px-4 py-2">{{ __('Progress') }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @forelse ($budgets as $budget)
-                        <tr class="{{ $budget->over_budget ? 'bg-red-100' : '' }}">
-                            <td class="px-4 py-2">{{ $loop->iteration }}</td>
-                            <td class="px-4 py-2">{{ $budget->category }}</td>
-                            <td class="px-4 py-2">${{ number_format($budget->amount, 2) }}</td>
-                            <td class="px-4 py-2">${{ number_format($budget->total_expenses, 2) }}</td>
-                            <td class="px-4 py-2">
-                                <span class="{{ $budget->remaining_budget < 0 ? 'text-red-500' : 'text-green-500' }}">
-                                    ${{ number_format($budget->remaining_budget, 2) }}
-                                </span>
-                            </td>
-                            <td class="px-4 py-2">
-                                <div class="relative w-full bg-gray-200 h-4 rounded">
-                                    <div
-                                        class="absolute top-0 left-0 h-4 {{ $budget->over_budget ? 'bg-red-500' : 'bg-blue-500' }} rounded"
-                                        style="width: {{ min(100, ($budget->total_expenses / $budget->amount) * 100) }}%;">
-                                    </div>
-                                </div>
-                                <span class="text-xs">
-                                    {{ min(100, round(($budget->total_expenses / $budget->amount) * 100)) }}%
-                                </span>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="6" class="text-center py-4">{{ __('No budgets found.') }}</td>
-                        </tr>
-                    @endforelse
-                    </tbody>
-                </table>
-            </div>
+            <!-- Budgets Table -->
+<div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+    <table class="min-w-full border-collapse">
+        <thead>
+        <tr class="bg-gray-200 dark:bg-gray-700 text-left">
+            <th class="px-4 py-2">{{ __('#') }}</th>
+            <th class="px-4 py-2">{{ __('Category') }}</th>
+            <th class="px-4 py-2">{{ __('Budget') }}</th>
+            <th class="px-4 py-2">{{ __('Spent') }}</th>
+            <th class="px-4 py-2">{{ __('Remaining') }}</th>
+            <th class="px-4 py-2">{{ __('Progress') }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        @forelse ($budgets as $budget)
+            <tr
+                class="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+                onclick="confirmAndNavigate('{{ route('budgets.edit', $budget->id) }}')"
+            >
+                <td class="px-4 py-2">{{ $loop->iteration }}</td>
+                <td class="px-4 py-2">{{ $budget->category }}</td>
+                <td class="px-4 py-2">${{ number_format($budget->amount, 2) }}</td>
+                <td class="px-4 py-2">${{ number_format($budget->total_expenses, 2) }}</td>
+                <td class="px-4 py-2">
+                    <span class="{{ $budget->remaining_budget < 0 ? 'text-red-500' : 'text-green-500' }}">
+                        ${{ number_format($budget->remaining_budget, 2) }}
+                    </span>
+                </td>
+                <td class="px-4 py-2">
+                    <div class="relative w-full bg-gray-200 h-4 rounded">
+                        <div
+                            class="absolute top-0 left-0 h-4 {{ $budget->over_budget ? 'bg-red-500' : 'bg-blue-500' }} rounded"
+                            style="width: {{ min(100, ($budget->total_expenses / $budget->amount) * 100) }}%;"
+                        ></div>
+                    </div>
+                    <span class="text-xs">
+                        {{ min(100, round(($budget->total_expenses / $budget->amount) * 100)) }}%
+                    </span>
+                </td>
+            </tr>
+        @empty
+            <tr>
+                <td colspan="6" class="text-center py-4">{{ __('No budgets found.') }}</td>
+            </tr>
+        @endforelse
+        </tbody>
+    </table>
+</div>
+
+<!-- Add this JavaScript -->
+<script>
+    function confirmAndNavigate(url) {
+        if (confirm('Are you sure you want to edit this budget?')) {
+            window.location.href = url;
+        }
+    }
+</script>
+
         </div>
     </div>
 </x-app-layout>

@@ -11,7 +11,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <form method="POST" action="{{ route('budgets.update', $budget->id) }}">
                         @csrf
-                        @method('PUT')
+                        @method('PATCH')
 
                         <!-- Category -->
                         <div class="mb-4">
