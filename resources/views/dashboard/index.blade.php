@@ -1,12 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Overview') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
-        <div class="w-full max-w-full mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Financial Overview Section -->
                 <div class="col-span-1 lg:col-span-3 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
@@ -87,7 +87,7 @@
                 </div>
 
                 <!-- Quick Links -->
-                <div class="col-span-1 lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="col-span-1 lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     <a href="{{ route('expenses.index') }}" class="p-2 sm:p-4 rounded-md shadow text-center hover:bg-gray-300 dark:hover:bg-gray-600">
                         <div class="text-blue-500 mb-2">
                             <i class="fas fa-wallet text-2xl"></i>
