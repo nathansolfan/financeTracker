@@ -33,6 +33,12 @@
                             <x-input-error :messages="$errors->get('date')" class="mt-2" />
                         </div>
 
+                        <label for="recurring" class="block text-sm font-medium text-gray-600 dark:text-gray-300">
+                            <input type="checkbox" name="recurring" id="recurring" value="1" {{ old('recurring') ? 'checked' : '' }}>
+                            {{ __('Make Recurring') }}
+                        </label>
+
+
                         <!-- Submit -->
                         <div class="flex items-center justify-end">
                             <x-primary-button class="ml-4">
