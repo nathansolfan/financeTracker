@@ -16,6 +16,13 @@
                 </p>
             </div>
 
+            <div class="flex justify-end">
+                <a href="{{ route('budgets.create') }}"
+                   class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 transition">
+                    <i class="fas fa-plus mr-2"></i> {{ __('Add Budget') }}
+                </a>
+            </div>
+
             <!-- Filter Section -->
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
                 <form method="GET" action="{{ route('budgets.index') }}">
