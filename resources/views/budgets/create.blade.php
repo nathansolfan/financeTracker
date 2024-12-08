@@ -33,6 +33,16 @@
                             <x-input-error :messages="$errors->get('month')" class="mt-2" />
                         </div>
 
+                        <label for="template" class="block text-sm font-medium text-gray-600 dark:text-gray-300">
+                            {{ __('Template') }}
+                        </label>
+                        <select name="template" id="template" onchange="loadTemplate(this.value)" class="mt-1 block w-full rounded-md border-gray-300">
+                            <option value="">{{ __('Select Template') }}</option>
+                            <option value="monthly">{{ __('Monthly Budget') }}</option>
+                            <option value="travel">{{ __('Travel Budget') }}</option>
+                        </select>
+
+
                         <!-- Submit -->
                         <div class="flex items-center justify-end">
                             <x-primary-button class="ml-4">
