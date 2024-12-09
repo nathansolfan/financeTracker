@@ -44,7 +44,9 @@ class ExpenseController extends Controller
             'category' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
             'date' => 'required|date',
+            'recurring' => 'nullable|boolean'
         ]);
+        $validated['recurring'] = $request->has('recurring');
 
         $user = Auth::user();
         $user->expenses()->create($validated);
@@ -67,7 +69,10 @@ class ExpenseController extends Controller
             'category' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
             'date' => 'required|date',
+            'recurring' => 'nullable|boolean'
         ]);
+
+        $validated['recurring'] = $request->has('recurring');
 
         $user = Auth::user();
         $expense = $user->expenses()->findOrFail($id);
