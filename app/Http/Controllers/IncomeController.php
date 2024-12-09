@@ -38,7 +38,10 @@ class IncomeController extends Controller
             'amount' => 'required|numeric|min:0.01',
             'source' => 'required|string|max:255',
             'date' => 'required|date',
+            'recurring' => 'nullable|boolean'
         ]);
+
+        $validated['recurring'] = $request->has('recurring');
 
         $user = Auth::user();
         $user->incomes()->create($validated);
@@ -61,7 +64,10 @@ class IncomeController extends Controller
             'amount' => 'required|numeric|min:0.01', // Amount must be numeric
             'source' => 'required|string|max:255',  // Source must be a string
             'date' => 'required|date',              // Date must be a valid date
+            'recurring' => 'nullable|boolean'
         ]);
+
+        $validated['recurring'] = $request->has('recurring');
 
         $user = Auth::user();
         $income = $user->incomes()->findOrFail($id); // Retrieve the specific income record
